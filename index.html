@@ -1,0 +1,896 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>인재풀 등록 — 넥스트파트너</title>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable.min.css" />
+  <link rel="stylesheet" href="dist/index.css" />
+</head>
+<body class="bg-neutral-50 font-base">
+
+  <!-- ───────────────────────── HEADER ───────────────────────── -->
+  <header class="np-header">
+    <div class="np-header-inner">
+      <!-- 로고 -->
+      <a href="/" class="flex items-center gap-2 shrink-0">
+        <svg width="32" height="32" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <rect width="32" height="32" rx="8" fill="#ff7f65"/>
+          <path d="M8 22V10l8 8 8-8v12" stroke="white" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+        <span class="text-xl font-bold text-neutral-900">넥스트파트너</span>
+      </a>
+      <span class="hidden md:block text-lg text-neutral-400 ml-2">인재풀 등록</span>
+      <!-- 모바일 닫기 버튼 -->
+      <button id="header-close-btn" class="np-app-bar-btn ml-auto md:hidden" aria-label="닫기">
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+      </button>
+      <!-- 데스크탑 닫기 -->
+      <button id="header-close-btn-desktop" class="np-btn-icon np-btn-icon-md np-btn-icon-grey-stroke ml-auto hidden md:flex" aria-label="닫기">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+      </button>
+    </div>
+  </header>
+
+  <!-- ───────────────────────── PROGRESS BAR ───────────────────────── -->
+  <div class="w-full bg-neutral-0 border-b border-neutral-200 sticky top-0 z-30">
+    <div class="w-full max-w-content mx-auto px-4 md:px-6 lg:px-8 py-4">
+      <!-- Step labels -->
+      <div class="flex items-center justify-between mb-3">
+        <div class="flex items-center gap-6 md:gap-10">
+          <button class="step-label flex items-center gap-2 text-base font-semibold text-primary-500" data-step="1">
+            <span class="step-circle flex items-center justify-center w-6 h-6 rounded-full bg-primary-500 text-neutral-0 text-sm font-bold shrink-0">✓</span>
+            <span class="hidden md:inline">기본 프로필</span>
+          </button>
+          <button class="step-label flex items-center gap-2 text-base font-semibold text-neutral-400" data-step="2">
+            <span class="step-circle flex items-center justify-center w-6 h-6 rounded-full bg-neutral-200 text-neutral-600 text-sm font-bold shrink-0">2</span>
+            <span class="hidden md:inline">커리어 설정</span>
+          </button>
+          <button class="step-label flex items-center gap-2 text-base font-semibold text-neutral-400" data-step="3">
+            <span class="step-circle flex items-center justify-center w-6 h-6 rounded-full bg-neutral-200 text-neutral-600 text-sm font-bold shrink-0">3</span>
+            <span class="hidden md:inline">자기 소개</span>
+          </button>
+          <button class="step-label flex items-center gap-2 text-base font-semibold text-neutral-400" data-step="4">
+            <span class="step-circle flex items-center justify-center w-6 h-6 rounded-full bg-neutral-200 text-neutral-600 text-sm font-bold shrink-0">4</span>
+            <span class="hidden md:inline">공개 설정</span>
+          </button>
+        </div>
+        <span id="step-counter" class="text-base text-neutral-400 shrink-0">1 / 4</span>
+      </div>
+      <!-- Progress track -->
+      <div class="w-full h-2 bg-neutral-100 rounded-pill overflow-hidden">
+        <div id="progress-bar" class="h-full bg-primary-500 rounded-pill transition-all duration-300 ease-out" style="width: 25%"></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ───────────────────────── MAIN CONTENT ───────────────────────── -->
+  <main class="w-full max-w-content mx-auto px-4 md:px-6 lg:px-8 py-10 md:py-16 pb-32">
+
+    <!-- ═══════════════ STEP 1: 기본 프로필 ═══════════════ -->
+    <section id="step-1" class="step-panel max-w-2xl mx-auto">
+      <h1 class="text-2xl md:text-3xl font-bold text-neutral-900 mb-2">기본 프로필</h1>
+      <p class="text-lg text-neutral-400 leading-relaxed mb-8">기업 담당자에게 나를 소개하는 첫 인상입니다.</p>
+
+      <div class="flex flex-col gap-6">
+
+        <!-- 이름 -->
+        <div class="np-textfield-wrap">
+          <label class="np-textfield-label" for="name">
+            이름 <span class="text-primary-500">*</span>
+          </label>
+          <div class="relative">
+            <input id="name" type="text" class="np-textfield pr-12" placeholder="홍길동" autocomplete="name" />
+            <span class="field-icon absolute right-4 top-1/2 -translate-y-1/2 hidden"></span>
+          </div>
+          <p class="np-textfield-hint hidden field-error-msg text-error-500 text-base mt-1"></p>
+        </div>
+
+        <!-- 전문 직함 -->
+        <div class="np-textfield-wrap">
+          <label class="np-textfield-label" for="title">
+            전문 직함 <span class="text-primary-500">*</span>
+          </label>
+          <div class="relative">
+            <input id="title" type="text" class="np-textfield pr-12" placeholder="CTO / 기술 전략가" />
+            <span class="field-icon absolute right-4 top-1/2 -translate-y-1/2 hidden"></span>
+          </div>
+          <p class="field-error-msg np-textfield-hint hidden"></p>
+        </div>
+
+        <!-- 연령대 -->
+        <div class="np-textfield-wrap">
+          <label class="np-textfield-label">연령대 <span class="text-primary-500">*</span></label>
+          <details class="np-dropdown w-full" id="age-dropdown">
+            <summary class="np-textfield flex items-center justify-between cursor-pointer" id="age-summary">
+              <span id="age-selected" class="text-neutral-400">선택하세요</span>
+              <svg class="np-dropdown-chevron w-5 h-5 text-neutral-400 shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg>
+            </summary>
+            <ul class="np-dropdown-menu w-full">
+              <li class="np-dropdown-item" data-value="30대" onclick="selectAge(this)">30대</li>
+              <li class="np-dropdown-item" data-value="40대" onclick="selectAge(this)">40대</li>
+              <li class="np-dropdown-item" data-value="50대" onclick="selectAge(this)">50대</li>
+              <li class="np-dropdown-item" data-value="60대 이상" onclick="selectAge(this)">60대 이상</li>
+            </ul>
+          </details>
+        </div>
+
+        <!-- 최종학력 -->
+        <div class="np-textfield-wrap">
+          <label class="np-textfield-label" for="education">최종학력</label>
+          <input id="education" type="text" class="np-textfield" placeholder="대학교" />
+          <p class="np-textfield-hint">선택 사항입니다.</p>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- ═══════════════ STEP 2: 커리어 설정 ═══════════════ -->
+    <section id="step-2" class="step-panel hidden max-w-2xl mx-auto">
+      <h1 class="text-2xl md:text-3xl font-bold text-neutral-900 mb-2">커리어 설정</h1>
+      <p class="text-lg text-neutral-400 leading-relaxed mb-8">희망하는 직종과 근무 형태를 알려주세요.</p>
+
+      <!-- 2-1. 희망 직종 -->
+      <div class="mb-10">
+        <h2 class="text-xl font-bold text-neutral-800 mb-4">희망 직종 <span class="text-primary-500">*</span></h2>
+
+        <!-- 선택된 직종 칩 표시 영역 -->
+        <div id="selected-jobs-wrap" class="hidden mb-4">
+          <div id="selected-jobs" class="flex flex-wrap gap-2"></div>
+        </div>
+
+        <!-- 직종 검색 -->
+        <div class="np-search mb-4">
+          <svg class="np-search-icon w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+          <input id="job-search" type="text" class="np-search-input" placeholder="직종명 검색" oninput="filterJobs(this.value)" />
+          <button class="np-search-clear hidden" id="job-search-clear" onclick="clearJobSearch()" aria-label="검색어 지우기">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="15" y1="9" x2="9" y2="15"/><line x1="9" y1="9" x2="15" y2="15"/></svg>
+          </button>
+        </div>
+
+        <!-- 대분류 탭 -->
+        <div class="np-tab-bar mb-4" id="job-tab-bar">
+          <button class="np-tab-item active" data-category="경영·전략" onclick="selectJobCategory(this)">경영·전략</button>
+          <button class="np-tab-item" data-category="재무·법무" onclick="selectJobCategory(this)">재무·법무</button>
+          <button class="np-tab-item" data-category="영업·마케팅" onclick="selectJobCategory(this)">영업·마케팅</button>
+          <button class="np-tab-item" data-category="운영·물류" onclick="selectJobCategory(this)">운영·물류</button>
+          <button class="np-tab-item" data-category="HR·교육" onclick="selectJobCategory(this)">HR·교육</button>
+          <button class="np-tab-item" data-category="기타" onclick="selectJobCategory(this)">기타</button>
+        </div>
+
+        <!-- 직종 태그 그리드 -->
+        <div id="job-tags" class="flex flex-wrap gap-2"></div>
+      </div>
+
+      <hr class="np-divider mb-10" />
+
+      <!-- 2-2. 경력 연수 -->
+      <div class="mb-10">
+        <h2 class="text-xl font-bold text-neutral-800 mb-4">경력 연수</h2>
+        <div id="career-chips" class="flex flex-wrap gap-2 mb-4">
+          <button class="np-chip" data-value="신입" onclick="selectCareer(this)">신입</button>
+          <button class="np-chip" data-value="1년" onclick="selectCareer(this)">1년</button>
+          <button class="np-chip" data-value="3년" onclick="selectCareer(this)">3년</button>
+          <button class="np-chip" data-value="5년" onclick="selectCareer(this)">5년</button>
+          <button class="np-chip" data-value="10년" onclick="selectCareer(this)">10년</button>
+          <button class="np-chip" data-value="15년" onclick="selectCareer(this)">15년</button>
+          <button class="np-chip" data-value="20년" onclick="selectCareer(this)">20년</button>
+          <button class="np-chip" data-value="30년 이상" onclick="selectCareer(this)">30년 이상</button>
+        </div>
+        <div class="np-textfield-wrap">
+          <input id="career-direct" type="text" class="np-textfield" placeholder="직접 입력 (예: 25년)" oninput="onCareerDirectInput(this.value)" />
+        </div>
+      </div>
+
+      <hr class="np-divider mb-10" />
+
+      <!-- 2-3. 희망 형태 -->
+      <div class="mb-10">
+        <h2 class="text-xl font-bold text-neutral-800 mb-4">희망 형태 <span class="text-sm font-normal text-neutral-400">(복수 선택 가능)</span></h2>
+
+        <div class="flex flex-col gap-6">
+          <div>
+            <p class="text-base font-semibold text-neutral-400 mb-2 uppercase tracking-wide">정규직 계열</p>
+            <div class="flex flex-wrap gap-2">
+              <button class="np-chip" onclick="toggleChip(this)">정규직</button>
+              <button class="np-chip" onclick="toggleChip(this)">계약직</button>
+              <button class="np-chip" onclick="toggleChip(this)">경력연장형 정규직</button>
+              <button class="np-chip" onclick="toggleChip(this)">경력연장형 계약직</button>
+            </div>
+          </div>
+          <div>
+            <p class="text-base font-semibold text-neutral-400 mb-2 uppercase tracking-wide">프로젝트 계열</p>
+            <div class="flex flex-wrap gap-2">
+              <button class="np-chip" onclick="toggleChip(this)">프로젝트 계약</button>
+              <button class="np-chip" onclick="toggleChip(this)">프로젝트 자문</button>
+            </div>
+          </div>
+          <div>
+            <p class="text-base font-semibold text-neutral-400 mb-2 uppercase tracking-wide">자문·위원</p>
+            <div class="flex flex-wrap gap-2">
+              <button class="np-chip" onclick="toggleChip(this)">자문/고문</button>
+              <button class="np-chip" onclick="toggleChip(this)">전문위원</button>
+              <button class="np-chip" onclick="toggleChip(this)">사외 자문</button>
+              <button class="np-chip" onclick="toggleChip(this)">사외이사</button>
+            </div>
+          </div>
+          <div>
+            <p class="text-base font-semibold text-neutral-400 mb-2 uppercase tracking-wide">교육·코칭</p>
+            <div class="flex flex-wrap gap-2">
+              <button class="np-chip" onclick="toggleChip(this)">멘토/코치</button>
+              <button class="np-chip" onclick="toggleChip(this)">강의/교육</button>
+              <button class="np-chip" onclick="toggleChip(this)">심사/평가위원</button>
+            </div>
+          </div>
+          <div>
+            <p class="text-base font-semibold text-neutral-400 mb-2 uppercase tracking-wide">유연 근무</p>
+            <div class="flex flex-wrap gap-2">
+              <button class="np-chip" onclick="toggleChip(this)">파트타임</button>
+              <button class="np-chip" onclick="toggleChip(this)">프리랜서</button>
+              <button class="np-chip" onclick="toggleChip(this)">업무위탁</button>
+              <button class="np-chip" onclick="toggleChip(this)">재택/원격</button>
+              <button class="np-chip" onclick="toggleChip(this)">협의 가능</button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <hr class="np-divider mb-10" />
+
+      <!-- 2-4. 근무 가능 지역 -->
+      <div>
+        <h2 class="text-xl font-bold text-neutral-800 mb-4">근무 가능 지역 <span class="text-sm font-normal text-neutral-400">(복수 선택 가능)</span></h2>
+        <div class="flex flex-wrap gap-2">
+          <button class="np-chip" onclick="toggleChip(this)">전국</button>
+          <button class="np-chip" onclick="toggleChip(this)">서울특별시</button>
+          <button class="np-chip" onclick="toggleChip(this)">부산광역시</button>
+          <button class="np-chip" onclick="toggleChip(this)">대구광역시</button>
+          <button class="np-chip" onclick="toggleChip(this)">인천광역시</button>
+          <button class="np-chip" onclick="toggleChip(this)">광주광역시</button>
+          <button class="np-chip" onclick="toggleChip(this)">대전광역시</button>
+          <button class="np-chip" onclick="toggleChip(this)">울산광역시</button>
+          <button class="np-chip" onclick="toggleChip(this)">세종특별자치시</button>
+          <button class="np-chip" onclick="toggleChip(this)">경기도</button>
+          <button class="np-chip" onclick="toggleChip(this)">강원특별자치도</button>
+          <button class="np-chip" onclick="toggleChip(this)">충청북도</button>
+          <button class="np-chip" onclick="toggleChip(this)">충청남도</button>
+          <button class="np-chip" onclick="toggleChip(this)">전북특별자치도</button>
+          <button class="np-chip" onclick="toggleChip(this)">전라남도</button>
+          <button class="np-chip" onclick="toggleChip(this)">경상북도</button>
+          <button class="np-chip" onclick="toggleChip(this)">경상남도</button>
+          <button class="np-chip" onclick="toggleChip(this)">제주특별자치도</button>
+        </div>
+      </div>
+    </section>
+
+    <!-- ═══════════════ STEP 3: 자기 소개 ═══════════════ -->
+    <section id="step-3" class="step-panel hidden max-w-2xl mx-auto">
+      <h1 class="text-2xl md:text-3xl font-bold text-neutral-900 mb-2">자기 소개</h1>
+      <p class="text-lg text-neutral-400 leading-relaxed mb-8">나를 잘 표현하는 소개글을 작성하세요. <span class="text-neutral-300">(선택)</span></p>
+
+      <!-- AI 자기소개 생성 카드 -->
+      <div id="ai-card" class="bg-primary-50 border border-primary-100 rounded-card p-6 mb-8">
+        <div class="flex items-start gap-3 mb-4">
+          <span class="text-2xl">✨</span>
+          <div>
+            <p class="text-lg font-bold text-neutral-900 mb-1">AI 추천</p>
+            <p class="text-lg font-semibold text-neutral-800">30초 만에 전문가다운 자기소개 완성</p>
+            <p class="text-base text-neutral-600 mt-1 leading-relaxed">보유 스킬을 입력하면 AI가 맞춤 자기소개를 자동으로 작성해 드립니다.</p>
+          </div>
+        </div>
+        <button id="ai-generate-btn" onclick="generateAI()" class="np-btn np-btn-md np-btn-primary w-full">
+          <span>✨</span> AI로 자기소개 작성하기
+        </button>
+      </div>
+
+      <!-- AI 결과 미리보기 (생성 후 표시) -->
+      <div id="ai-result" class="hidden bg-neutral-0 border border-neutral-200 rounded-card p-5 mb-6">
+        <div class="flex items-center gap-2 mb-3">
+          <span class="np-badge np-badge-primary">AI 생성</span>
+          <span class="text-base text-neutral-400">아래 내용을 수정하거나 다시 생성하세요</span>
+        </div>
+        <p id="ai-result-text" class="text-lg text-neutral-800 leading-relaxed mb-4"></p>
+        <div class="flex gap-3">
+          <button onclick="applyAIResult()" class="np-btn np-btn-sm np-btn-primary">수정하기</button>
+          <button onclick="generateAI()" class="np-btn np-btn-sm np-btn-secondary">다시 생성</button>
+        </div>
+      </div>
+
+      <!-- 보유 스킬 -->
+      <div class="np-textfield-wrap mb-6">
+        <label class="np-textfield-label" for="skills">보유 스킬</label>
+        <input id="skills" type="text" class="np-textfield" placeholder="DX전략, AI, 클라우드, 리더십" />
+        <p class="np-textfield-hint">AI 자기소개 생성 시 활용됩니다. 쉼표로 구분해 입력하세요.</p>
+      </div>
+
+      <!-- 자기소개 텍스트 -->
+      <div class="np-textfield-wrap">
+        <label class="np-textfield-label" for="intro">자기소개</label>
+
+        <!-- 추천 키워드 태그 -->
+        <div class="flex flex-wrap gap-2 mb-3">
+          <button class="np-chip text-sm" onclick="insertKeyword('책임감 있게 일합니다')">책임감 있게 일합니다</button>
+          <button class="np-chip text-sm" onclick="insertKeyword('오래 근무할 수 있습니다')">오래 근무할 수 있습니다</button>
+          <button class="np-chip text-sm" onclick="insertKeyword('고객 응대가 익숙합니다')">고객 응대가 익숙합니다</button>
+          <button class="np-chip text-sm" onclick="insertKeyword('협업이 원활합니다')">협업이 원활합니다</button>
+          <button class="np-chip text-sm" onclick="insertKeyword('시간 약속을 잘 지킵니다')">시간 약속을 잘 지킵니다</button>
+        </div>
+
+        <textarea id="intro" class="np-textarea" rows="6"
+          placeholder="'AI 자동완성' 버튼을 누르거나 직접 입력하세요..."
+          maxlength="300"
+          oninput="updateCharCount(this)"></textarea>
+        <div class="flex justify-end mt-1">
+          <span id="char-count" class="text-base text-neutral-400">0 / 300자</span>
+        </div>
+      </div>
+    </section>
+
+    <!-- ═══════════════ STEP 4: 공개 설정 ═══════════════ -->
+    <section id="step-4" class="step-panel hidden max-w-2xl mx-auto">
+      <h1 class="text-2xl md:text-3xl font-bold text-neutral-900 mb-2">공개 설정</h1>
+      <p class="text-lg text-neutral-400 leading-relaxed mb-8">연락처와 프로필 공개 여부를 설정하세요.</p>
+
+      <!-- 연락처 안내 -->
+      <div class="flex items-center gap-3 bg-info-100 border border-info-500 rounded-card px-4 py-3 mb-6">
+        <svg class="text-info-500 shrink-0" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
+        <p class="text-base text-info-500 font-medium">기업에게만 공개되며 외부에 노출되지 않습니다.</p>
+      </div>
+
+      <!-- 연락처 정보 -->
+      <div class="flex flex-col gap-6 mb-10">
+        <!-- 휴대폰 번호 -->
+        <div class="np-textfield-wrap">
+          <label class="np-textfield-label" for="phone">휴대폰 번호</label>
+          <div class="relative">
+            <input id="phone" type="tel" class="np-textfield pr-12" placeholder="010-0000-0000"
+              oninput="formatPhone(this)" autocomplete="tel" />
+            <span class="field-icon absolute right-4 top-1/2 -translate-y-1/2 hidden"></span>
+          </div>
+          <p class="field-error-msg np-textfield-hint hidden"></p>
+        </div>
+
+        <!-- 이메일 -->
+        <div class="np-textfield-wrap">
+          <label class="np-textfield-label" for="email">이메일 주소</label>
+          <div class="relative">
+            <input id="email" type="email" class="np-textfield pr-12" placeholder="example@email.com"
+              autocomplete="email" onblur="validateEmail(this)" />
+            <span class="field-icon absolute right-4 top-1/2 -translate-y-1/2 hidden"></span>
+          </div>
+          <p class="field-error-msg np-textfield-hint hidden"></p>
+        </div>
+      </div>
+
+      <hr class="np-divider mb-8" />
+
+      <!-- 프로필 공개 설정 -->
+      <div>
+        <h2 class="text-xl font-bold text-neutral-800 mb-4">프로필 공개 설정</h2>
+        <div class="bg-neutral-0 border border-neutral-200 rounded-card p-5">
+          <div class="flex items-center justify-between gap-4">
+            <div>
+              <p id="visibility-label" class="text-lg font-semibold text-neutral-900">기업에 공개 중</p>
+              <p id="visibility-desc" class="text-base text-neutral-400 mt-1 leading-relaxed">공개 시 기업 담당자가 프로필을 검색할 수 있습니다.</p>
+            </div>
+            <label class="np-switch shrink-0">
+              <input type="checkbox" class="np-switch-input np-switch-md" id="visibility-toggle" checked onchange="toggleVisibility(this)" />
+            </label>
+          </div>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- ───────────────────────── BOTTOM FIXED ACTIONS ───────────────────────── -->
+  <div class="fixed bottom-0 left-0 right-0 z-40 bg-neutral-0 border-t border-neutral-200">
+    <!-- 모바일 하단 내비바 여백 대응 -->
+    <div class="w-full max-w-content mx-auto px-4 md:px-6 lg:px-8 py-4 flex items-center gap-3">
+      <button id="prev-btn" onclick="prevStep()" class="np-btn np-btn-md np-btn-grey-stroke hidden" style="min-width: 100px">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 18 9 12 15 6"/></svg>
+        이전
+      </button>
+      <div class="flex-1"></div>
+
+      <!-- STEP 3 전용: 스킵 버튼 -->
+      <button id="skip-btn" onclick="skipStep3()" class="np-btn np-btn-md np-btn-ghost hidden">건너뛰기</button>
+
+      <button id="next-btn" onclick="nextStep()" class="np-btn np-btn-md np-btn-primary" style="min-width: 140px">
+        다음
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"/></svg>
+      </button>
+    </div>
+  </div>
+
+  <!-- ───────────────────────── 이탈 방지 다이얼로그 ───────────────────────── -->
+  <div id="exit-modal" class="np-modal-overlay hidden">
+    <div class="np-modal" role="dialog" aria-modal="true" aria-labelledby="exit-modal-title">
+      <div class="np-modal-header">
+        <h2 class="np-modal-title" id="exit-modal-title">페이지를 나가시겠습니까?</h2>
+      </div>
+      <div class="np-modal-body">
+        작성 중인 내용이 있습니다. 지금 나가면 저장되지 않습니다.
+      </div>
+      <div class="np-modal-footer">
+        <button onclick="closeExitModal()" class="np-btn np-btn-md np-btn-grey-stroke flex-1">계속 작성</button>
+        <button onclick="confirmExit()" class="np-btn np-btn-md np-btn-primary flex-1">나가기</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ───────────────────────── TOAST ───────────────────────── -->
+  <div class="np-toast-wrap" id="toast-wrap"></div>
+
+  <!-- ───────────────────────── SCRIPT ───────────────────────── -->
+  <script>
+    /* ── State ── */
+    let currentStep = 1;
+    const totalSteps = 4;
+
+    const jobData = {
+      '경영·전략': ['경영 전략', '사업 개발', '연구개발', 'IT·디지털', 'PM·PMO'],
+      '재무·법무': ['재무·회계', '법무·준법', '감사·리스크', '구매·SCM'],
+      '영업·마케팅': ['영업', '마케팅', '홍보·대외협력', '고객 경험', '고객 상담'],
+      '운영·물류': ['총무·운영', '물류·유통', '생산·품질', '안전·환경'],
+      'HR·교육': ['인사·조직', '교육·멘토링', '강의', '심사·평가', '전문위원·고문'],
+      '기타': ['서비스 기획', '건설·시설', '무역·해외사업', '사무 지원', '돌봄·케어'],
+    };
+
+    let selectedJobs = new Set();
+    let currentJobCategory = '경영·전략';
+    let selectedCareerChip = null;
+
+    /* ── Step Navigation ── */
+    function goToStep(step) {
+      document.querySelectorAll('.step-panel').forEach(p => p.classList.add('hidden'));
+      document.getElementById(`step-${step}`).classList.remove('hidden');
+
+      currentStep = step;
+      updateProgressUI();
+      updateBottomActions();
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+      saveDraft();
+    }
+
+    function updateProgressUI() {
+      const pct = (currentStep / totalSteps) * 100;
+      document.getElementById('progress-bar').style.width = pct + '%';
+      document.getElementById('step-counter').textContent = `${currentStep} / ${totalSteps}`;
+
+      document.querySelectorAll('.step-label').forEach(btn => {
+        const s = parseInt(btn.dataset.step);
+        const circle = btn.querySelector('.step-circle');
+        if (s < currentStep) {
+          btn.className = 'step-label flex items-center gap-2 text-base font-semibold text-primary-500 cursor-pointer';
+          circle.className = 'step-circle flex items-center justify-center w-6 h-6 rounded-full bg-primary-500 text-neutral-0 text-sm font-bold shrink-0';
+          circle.textContent = '✓';
+        } else if (s === currentStep) {
+          btn.className = 'step-label flex items-center gap-2 text-base font-semibold text-primary-500 cursor-pointer';
+          circle.className = 'step-circle flex items-center justify-center w-6 h-6 rounded-full bg-primary-500 text-neutral-0 text-sm font-bold shrink-0';
+          circle.textContent = s;
+        } else {
+          btn.className = 'step-label flex items-center gap-2 text-base font-semibold text-neutral-400 cursor-pointer';
+          circle.className = 'step-circle flex items-center justify-center w-6 h-6 rounded-full bg-neutral-200 text-neutral-600 text-sm font-bold shrink-0';
+          circle.textContent = s;
+        }
+      });
+    }
+
+    function updateBottomActions() {
+      const prevBtn = document.getElementById('prev-btn');
+      const nextBtn = document.getElementById('next-btn');
+      const skipBtn = document.getElementById('skip-btn');
+
+      prevBtn.classList.toggle('hidden', currentStep === 1);
+      skipBtn.classList.toggle('hidden', currentStep !== 3);
+
+      if (currentStep === totalSteps) {
+        nextBtn.innerHTML = `저장하기`;
+        nextBtn.onclick = saveProfile;
+      } else {
+        nextBtn.innerHTML = `다음 <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"/></svg>`;
+        nextBtn.onclick = nextStep;
+      }
+    }
+
+    function nextStep() {
+      if (!validateCurrentStep()) return;
+      if (currentStep < totalSteps) goToStep(currentStep + 1);
+    }
+
+    function prevStep() {
+      if (currentStep > 1) goToStep(currentStep - 1);
+    }
+
+    function skipStep3() {
+      goToStep(4);
+    }
+
+    /* ── Validation ── */
+    function validateCurrentStep() {
+      if (currentStep === 1) return validateStep1();
+      if (currentStep === 2) return validateStep2();
+      return true;
+    }
+
+    function validateStep1() {
+      let valid = true;
+      const nameEl = document.getElementById('name');
+      const titleEl = document.getElementById('title');
+      const ageSel = document.getElementById('age-selected');
+
+      if (!nameEl.value.trim()) {
+        setFieldError(nameEl, '이름을 입력해 주세요.');
+        valid = false;
+      } else {
+        setFieldSuccess(nameEl);
+      }
+
+      if (!titleEl.value.trim()) {
+        setFieldError(titleEl, '전문 직함을 입력해 주세요. 예: CTO, 기술 전략 임원');
+        valid = false;
+      } else {
+        setFieldSuccess(titleEl);
+      }
+
+      if (ageSel.textContent === '선택하세요') {
+        ageSel.closest('details').querySelector('summary').classList.add('border-error-500');
+        valid = false;
+      }
+
+      return valid;
+    }
+
+    function validateStep2() {
+      if (selectedJobs.size === 0) {
+        showToast('희망 직종을 1개 이상 선택해 주세요.', 'error');
+        return false;
+      }
+      return true;
+    }
+
+    function setFieldError(input, msg) {
+      input.classList.add('np-textfield-error');
+      input.classList.remove('border-success-500');
+      const wrap = input.closest('.np-textfield-wrap');
+      if (!wrap) return;
+      const errMsg = wrap.querySelector('.field-error-msg');
+      const icon = wrap.querySelector('.field-icon');
+      if (errMsg) {
+        errMsg.textContent = msg;
+        errMsg.className = 'field-error-msg np-textfield-hint-error';
+      }
+      if (icon) {
+        icon.innerHTML = `<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#f44336" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="15" y1="9" x2="9" y2="15"/><line x1="9" y1="9" x2="15" y2="15"/></svg>`;
+        icon.classList.remove('hidden');
+      }
+    }
+
+    function setFieldSuccess(input) {
+      input.classList.remove('np-textfield-error');
+      input.classList.add('border-success-500');
+      const wrap = input.closest('.np-textfield-wrap');
+      if (!wrap) return;
+      const errMsg = wrap.querySelector('.field-error-msg');
+      const icon = wrap.querySelector('.field-icon');
+      if (errMsg) {
+        errMsg.textContent = '';
+        errMsg.className = 'field-error-msg np-textfield-hint hidden';
+      }
+      if (icon) {
+        icon.innerHTML = `<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#4caf50" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>`;
+        icon.classList.remove('hidden');
+      }
+    }
+
+    /* ── Blur validation for step 1 fields ── */
+    document.getElementById('name').addEventListener('blur', function() {
+      if (this.value.trim()) setFieldSuccess(this);
+      else setFieldError(this, '이름을 입력해 주세요.');
+    });
+    document.getElementById('title').addEventListener('blur', function() {
+      if (this.value.trim()) setFieldSuccess(this);
+      else setFieldError(this, '전문 직함을 입력해 주세요. 예: CTO, 기술 전략 임원');
+    });
+
+    /* ── Age Dropdown ── */
+    function selectAge(item) {
+      document.getElementById('age-selected').textContent = item.dataset.value;
+      document.getElementById('age-selected').classList.remove('text-neutral-400');
+      document.getElementById('age-selected').classList.add('text-neutral-900');
+      const summary = document.getElementById('age-summary');
+      summary.classList.remove('border-error-500');
+      document.querySelectorAll('#age-dropdown .np-dropdown-item').forEach(i => i.classList.remove('selected'));
+      item.classList.add('selected');
+      document.getElementById('age-dropdown').removeAttribute('open');
+    }
+
+    /* ── Job Tags ── */
+    function renderJobTags(category, filterText = '') {
+      const container = document.getElementById('job-tags');
+      container.innerHTML = '';
+      const jobs = jobData[category] || [];
+      const filtered = filterText
+        ? Object.values(jobData).flat().filter(j => j.includes(filterText))
+        : jobs;
+
+      filtered.forEach(job => {
+        const btn = document.createElement('button');
+        btn.className = selectedJobs.has(job) ? 'np-chip np-chip-active' : 'np-chip';
+        btn.textContent = selectedJobs.has(job) ? `✓ ${job}` : job;
+        btn.onclick = () => toggleJob(job, btn);
+        container.appendChild(btn);
+      });
+    }
+
+    function toggleJob(job, btn) {
+      if (selectedJobs.has(job)) {
+        selectedJobs.delete(job);
+        btn.className = 'np-chip';
+        btn.textContent = job;
+      } else {
+        selectedJobs.add(job);
+        btn.className = 'np-chip np-chip-active';
+        btn.textContent = `✓ ${job}`;
+      }
+      renderSelectedJobs();
+    }
+
+    function renderSelectedJobs() {
+      const wrap = document.getElementById('selected-jobs-wrap');
+      const container = document.getElementById('selected-jobs');
+      container.innerHTML = '';
+      if (selectedJobs.size === 0) {
+        wrap.classList.add('hidden');
+        return;
+      }
+      wrap.classList.remove('hidden');
+      selectedJobs.forEach(job => {
+        const chip = document.createElement('span');
+        chip.className = 'np-chip np-chip-active';
+        chip.innerHTML = `✓ ${job} <button class="ml-1 text-primary-500 hover:text-primary-300" onclick="removeJob('${job}')" aria-label="${job} 삭제">×</button>`;
+        container.appendChild(chip);
+      });
+    }
+
+    function removeJob(job) {
+      selectedJobs.delete(job);
+      renderSelectedJobs();
+      renderJobTags(currentJobCategory, document.getElementById('job-search').value);
+    }
+
+    function selectJobCategory(btn) {
+      document.querySelectorAll('#job-tab-bar .np-tab-item').forEach(t => t.classList.remove('active'));
+      btn.classList.add('active');
+      currentJobCategory = btn.dataset.category;
+      renderJobTags(currentJobCategory, document.getElementById('job-search').value);
+    }
+
+    function filterJobs(val) {
+      const clearBtn = document.getElementById('job-search-clear');
+      clearBtn.classList.toggle('hidden', !val);
+      renderJobTags(currentJobCategory, val);
+    }
+
+    function clearJobSearch() {
+      document.getElementById('job-search').value = '';
+      document.getElementById('job-search-clear').classList.add('hidden');
+      renderJobTags(currentJobCategory);
+    }
+
+    /* ── Career Chips ── */
+    function selectCareer(btn) {
+      if (selectedCareerChip === btn) {
+        btn.classList.remove('np-chip-active');
+        selectedCareerChip = null;
+        document.getElementById('career-direct').value = '';
+        return;
+      }
+      if (selectedCareerChip) selectedCareerChip.classList.remove('np-chip-active');
+      btn.classList.add('np-chip-active');
+      selectedCareerChip = btn;
+      document.getElementById('career-direct').value = btn.dataset.value;
+    }
+
+    function onCareerDirectInput(val) {
+      if (selectedCareerChip) {
+        selectedCareerChip.classList.remove('np-chip-active');
+        selectedCareerChip = null;
+      }
+    }
+
+    /* ── Generic Chip Toggle ── */
+    function toggleChip(btn) {
+      btn.classList.toggle('np-chip-active');
+    }
+
+    /* ── Phone Formatting ── */
+    function formatPhone(input) {
+      let v = input.value.replace(/\D/g, '');
+      if (v.length > 11) v = v.slice(0, 11);
+      if (v.length >= 8) v = v.slice(0, 3) + '-' + v.slice(3, 7) + '-' + v.slice(7);
+      else if (v.length >= 4) v = v.slice(0, 3) + '-' + v.slice(3);
+      input.value = v;
+    }
+
+    /* ── Email Validation ── */
+    function validateEmail(input) {
+      const re = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+      if (!input.value) return;
+      if (re.test(input.value)) setFieldSuccess(input);
+      else setFieldError(input, '이메일 형식을 확인해 주세요. 예: name@email.com');
+    }
+
+    /* ── Visibility Toggle ── */
+    function toggleVisibility(input) {
+      const label = document.getElementById('visibility-label');
+      const desc = document.getElementById('visibility-desc');
+      if (input.checked) {
+        label.textContent = '기업에 공개 중';
+        desc.textContent = '공개 시 기업 담당자가 프로필을 검색할 수 있습니다.';
+      } else {
+        label.textContent = '비공개로 전환';
+        desc.textContent = '비공개 시 기업에 노출되지 않습니다.';
+      }
+    }
+
+    /* ── Char Count ── */
+    function updateCharCount(textarea) {
+      document.getElementById('char-count').textContent = `${textarea.value.length} / 300자`;
+    }
+
+    /* ── Keyword Insert ── */
+    function insertKeyword(kw) {
+      const ta = document.getElementById('intro');
+      const cur = ta.value;
+      const append = cur && !cur.endsWith(' ') && !cur.endsWith('\n') ? ' ' + kw : kw;
+      ta.value = (cur + append).slice(0, 300);
+      updateCharCount(ta);
+      ta.focus();
+    }
+
+    /* ── AI Generation (Mock) ── */
+    function generateAI() {
+      const skills = document.getElementById('skills').value || '다양한 분야';
+      const btn = document.getElementById('ai-generate-btn');
+      btn.disabled = true;
+      btn.innerHTML = `<span class="np-spinner np-spinner-sm mr-2"></span> 생성 중...`;
+
+      setTimeout(() => {
+        const sampleTexts = [
+          `${skills} 분야에서 쌓은 폭넓은 경험을 바탕으로 조직에 실질적인 가치를 더할 수 있습니다. 책임감을 갖고 맡은 일을 끝까지 완수하며, 팀과의 협업을 통해 시너지를 만들어내는 것을 중요하게 생각합니다. 오래 함께할 수 있는 신뢰할 수 있는 파트너가 되겠습니다.`,
+          `수십 년간 ${skills} 분야에서 실무 경험을 쌓아온 전문가로서, 현장에서 통하는 실용적인 문제 해결 능력을 갖추고 있습니다. 시간 약속과 책임을 중시하며, 조직이 나아가야 할 방향에 기여할 준비가 되어 있습니다.`,
+        ];
+        const text = sampleTexts[Math.floor(Math.random() * sampleTexts.length)];
+
+        document.getElementById('ai-result').classList.remove('hidden');
+        document.getElementById('ai-result-text').textContent = text;
+        btn.disabled = false;
+        btn.innerHTML = `<span>✨</span> 다시 생성하기`;
+      }, 1800);
+    }
+
+    function applyAIResult() {
+      const text = document.getElementById('ai-result-text').textContent;
+      const ta = document.getElementById('intro');
+      ta.value = text.slice(0, 300);
+      updateCharCount(ta);
+      ta.focus();
+    }
+
+    /* ── Save Profile ── */
+    function saveProfile() {
+      const btn = document.getElementById('next-btn');
+      btn.disabled = true;
+      btn.innerHTML = `<span class="np-spinner np-spinner-sm mr-2"></span> 저장 중...`;
+
+      setTimeout(() => {
+        btn.disabled = false;
+        btn.textContent = '저장하기';
+        showToast('프로필이 저장되었습니다! 기업에 공개됩니다.', 'success');
+        setTimeout(() => { window.location.href = '/'; }, 3500);
+      }, 2000);
+    }
+
+    /* ── Toast ── */
+    function showToast(message, type = 'default') {
+      const wrap = document.getElementById('toast-wrap');
+      const toast = document.createElement('div');
+      toast.className = 'np-toast';
+      toast.style.animation = 'np-toast-in 0.2s ease-out forwards';
+
+      const icon = type === 'success'
+        ? `<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#4caf50" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>`
+        : type === 'error'
+        ? `<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#f44336" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="15" y1="9" x2="9" y2="15"/><line x1="9" y1="9" x2="15" y2="15"/></svg>`
+        : `<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#999" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>`;
+
+      toast.innerHTML = `${icon}<span>${message}</span>`;
+      wrap.appendChild(toast);
+
+      setTimeout(() => {
+        toast.style.animation = 'np-toast-out 0.2s ease-out forwards';
+        setTimeout(() => toast.remove(), 250);
+      }, 3000);
+    }
+
+    /* ── Exit Guard ── */
+    function showExitModal() { document.getElementById('exit-modal').classList.remove('hidden'); }
+    function closeExitModal() { document.getElementById('exit-modal').classList.add('hidden'); }
+    function confirmExit() { window.location.href = '/'; }
+
+    document.getElementById('header-close-btn').addEventListener('click', showExitModal);
+    document.getElementById('header-close-btn-desktop').addEventListener('click', showExitModal);
+    document.getElementById('exit-modal').addEventListener('click', function(e) {
+      if (e.target === this) closeExitModal();
+    });
+
+    document.querySelectorAll('.step-label').forEach(btn => {
+      btn.addEventListener('click', () => {
+        const target = parseInt(btn.dataset.step);
+        if (target < currentStep) goToStep(target);
+      });
+    });
+
+    /* ── Auto Draft ── */
+    function saveDraft() {
+      const data = {
+        step: currentStep,
+        name: document.getElementById('name').value,
+        title: document.getElementById('title').value,
+        age: document.getElementById('age-selected').textContent,
+        education: document.getElementById('education').value,
+        jobs: [...selectedJobs],
+        skills: document.getElementById('skills').value,
+        intro: document.getElementById('intro').value,
+        phone: document.getElementById('phone').value,
+        email: document.getElementById('email').value,
+      };
+      try { localStorage.setItem('np-talentpool-draft', JSON.stringify(data)); } catch(e) {}
+    }
+
+    function loadDraft() {
+      try {
+        const raw = localStorage.getItem('np-talentpool-draft');
+        if (!raw) return;
+        const data = JSON.parse(raw);
+        if (!data.name && !data.title && (!data.jobs || data.jobs.length === 0)) return;
+
+        const resume = confirm('이전에 작성하던 내용이 있습니다. 이어서 작성하시겠습니까?');
+        if (!resume) { localStorage.removeItem('np-talentpool-draft'); return; }
+
+        if (data.name) document.getElementById('name').value = data.name;
+        if (data.title) document.getElementById('title').value = data.title;
+        if (data.age && data.age !== '선택하세요') {
+          document.getElementById('age-selected').textContent = data.age;
+          document.getElementById('age-selected').classList.remove('text-neutral-400');
+          document.getElementById('age-selected').classList.add('text-neutral-900');
+          document.querySelectorAll('#age-dropdown .np-dropdown-item').forEach(i => {
+            if (i.dataset.value === data.age) i.classList.add('selected');
+          });
+        }
+        if (data.education) document.getElementById('education').value = data.education;
+        if (data.jobs) { data.jobs.forEach(j => selectedJobs.add(j)); renderSelectedJobs(); }
+        if (data.skills) document.getElementById('skills').value = data.skills;
+        if (data.intro) { document.getElementById('intro').value = data.intro; updateCharCount(document.getElementById('intro')); }
+        if (data.phone) document.getElementById('phone').value = data.phone;
+        if (data.email) document.getElementById('email').value = data.email;
+        if (data.step > 1) goToStep(data.step);
+      } catch(e) {}
+    }
+
+    /* Auto-save on input */
+    ['name','title','education','skills','intro','phone','email'].forEach(id => {
+      const el = document.getElementById(id);
+      if (el) el.addEventListener('input', saveDraft);
+    });
+
+    /* ── Init ── */
+    renderJobTags(currentJobCategory);
+    updateProgressUI();
+    updateBottomActions();
+    loadDraft();
+  </script>
+</body>
+</html>
