@@ -6,28 +6,33 @@
   <title>인재풀 등록 — 넥스트파트너</title>
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable.min.css" />
   <link rel="stylesheet" href="dist/index.css" />
+  <script src="https://unpkg.com/lucide@latest/dist/umd/lucide.min.js"></script>
 </head>
 <body class="bg-neutral-50 font-base">
 
-  <!-- ───────────────────────── HEADER ───────────────────────── -->
+  <!-- ───────────────────────── HEADER (DS 그대로) ───────────────────────── -->
   <header class="np-header">
     <div class="np-header-inner">
-      <!-- 로고 -->
-      <a href="/" class="flex items-center gap-2 shrink-0">
-        <svg width="32" height="32" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
-          <rect width="32" height="32" rx="8" fill="#ff7f65"/>
-          <path d="M8 22V10l8 8 8-8v12" stroke="white" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
-        </svg>
-        <span class="text-xl font-bold text-neutral-900">넥스트파트너</span>
-      </a>
-      <span class="hidden md:block text-lg text-neutral-400 ml-2">인재풀 등록</span>
-      <!-- 모바일 닫기 버튼 -->
-      <button id="header-close-btn" class="np-app-bar-btn ml-auto md:hidden" aria-label="닫기">
-        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
-      </button>
-      <!-- 데스크탑 닫기 -->
-      <button id="header-close-btn-desktop" class="np-btn-icon np-btn-icon-md np-btn-icon-grey-stroke ml-auto hidden md:flex" aria-label="닫기">
-        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+      <div class="flex items-center gap-2 shrink-0">
+        <a href="#" class="flex items-center gap-2">
+          <img src="img/symbol.png" width="32" height="32" alt="NextPartner" />
+          <span class="text-2xl font-bold text-neutral-900 tracking-tight">NextPartner</span>
+        </a>
+        <span class="np-badge np-badge-warning">구직자</span>
+      </div>
+      <nav class="np-header-nav">
+        <button class="np-btn np-btn-secondary np-btn-md">이력서·자기소개서</button>
+        <button class="np-btn np-btn-primary np-btn-md">인재풀 등록</button>
+        <a class="np-nav-link">일자리</a>
+        <a class="np-nav-link">프로젝트</a>
+        <a class="np-nav-link">박람회</a>
+      </nav>
+      <div class="np-header-actions">
+        <button class="np-btn np-btn-ghost np-btn-md">로그인</button>
+        <button class="np-btn np-btn-primary np-btn-md">회원가입</button>
+      </div>
+      <button class="np-header-menu-btn" aria-label="메뉴">
+        <i data-lucide="menu" class="w-6 h-6"></i>
       </button>
     </div>
   </header>
@@ -819,8 +824,11 @@
     function closeExitModal() { document.getElementById('exit-modal').classList.add('hidden'); }
     function confirmExit() { window.location.href = '/'; }
 
-    document.getElementById('header-close-btn').addEventListener('click', showExitModal);
-    document.getElementById('header-close-btn-desktop').addEventListener('click', showExitModal);
+    /* 이탈 방지: 브라우저 뒤로가기 시에도 다이얼로그 표시 */
+    window.addEventListener('beforeunload', function(e) {
+      const hasData = document.getElementById('name').value || document.getElementById('title').value;
+      if (hasData) { e.preventDefault(); e.returnValue = ''; }
+    });
     document.getElementById('exit-modal').addEventListener('click', function(e) {
       if (e.target === this) closeExitModal();
     });
@@ -899,6 +907,64 @@
     updateProgressUI();
     updateBottomActions();
     loadDraft();
+    lucide.createIcons();
   </script>
+
+  <!-- ───────────────────────── FOOTER (DS 그대로) ───────────────────────── -->
+  <footer class="np-footer">
+    <div class="np-footer-inner">
+      <!-- 왼쪽: 회사 정보 -->
+      <div class="flex flex-col justify-between gap-8 flex-1">
+        <div>
+          <p class="np-footer-tagline">중장년층을 위한 일자리 매칭 플랫폼</p>
+          <p class="np-footer-info">
+            주식회사 모리아타운 &nbsp;|&nbsp; 대표: 권오형 &nbsp;|&nbsp; 사업자등록번호: 215-86-89431<br/>
+            주소: 05854 서울특별시 송파구 법원로 114 (문정동) 비동 915호 &nbsp;|&nbsp; 전화:
+            <a href="tel:02-6713-7076" class="underline hover:text-neutral-900 transition-colors">02-6713-7076</a><br/>
+            직업정보제공사업 신고번호: 서울동부 제2026-11호
+          </p>
+          <p class="np-footer-info mt-3">© 2026 NextPartner. All rights reserved.</p>
+        </div>
+        <div class="flex items-center gap-3">
+          <img src="img/symbol.png" width="40" height="40" alt="NextPartner" />
+          <div>
+            <p class="text-base font-bold text-neutral-900 leading-tight">NextPartner</p>
+            <p class="text-sm text-neutral-400 leading-tight">Senior Talent Marketplace</p>
+          </div>
+        </div>
+      </div>
+      <!-- 오른쪽: Support -->
+      <div class="shrink-0">
+        <p class="np-footer-section-title">Support</p>
+        <a class="np-footer-link">고객센터</a>
+        <a class="np-footer-link">회사소개</a>
+        <a class="np-footer-link">개인회원 이용약관</a>
+        <a class="np-footer-link">기업회원 이용약관</a>
+        <a class="np-footer-link">개인정보 처리방침</a>
+        <a class="np-footer-link">위치기반서비스</a>
+      </div>
+    </div>
+  </footer>
+
+  <!-- ───────────────────────── BOTTOM NAV (DS 그대로, 모바일만 표시) ───────────────────────── -->
+  <nav class="np-bottom-nav fixed bottom-0 left-0 right-0 z-50 md:hidden">
+    <div class="np-bottom-nav-item active">
+      <i data-lucide="home" class="w-6 h-6"></i>
+      <span class="np-bottom-nav-label">홈</span>
+    </div>
+    <div class="np-bottom-nav-item">
+      <i data-lucide="briefcase" class="w-6 h-6"></i>
+      <span class="np-bottom-nav-label">일자리</span>
+    </div>
+    <div class="np-bottom-nav-item">
+      <i data-lucide="file-pen-line" class="w-6 h-6"></i>
+      <span class="np-bottom-nav-label">이력서 등록</span>
+    </div>
+    <div class="np-bottom-nav-item">
+      <i data-lucide="circle-user" class="w-6 h-6"></i>
+      <span class="np-bottom-nav-label">내 계정</span>
+    </div>
+  </nav>
+
 </body>
 </html>
