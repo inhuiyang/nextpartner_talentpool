@@ -155,6 +155,18 @@
 
       <hr class="np-divider mb-10" />
 
+      <!-- 2-1-1. 보유 스킬 -->
+      <div class="mb-10">
+        <h2 class="text-xl font-bold text-neutral-800 mb-4">보유 스킬</h2>
+        <div class="np-textfield-wrap">
+          <input id="skills" type="text" class="np-textfield" placeholder="예: DX전략, AI, 클라우드, 리더십"
+            oninput="onSkillsInput(this.value)" />
+          <p class="np-textfield-hint">쉼표로 구분해 입력하세요. 자기소개 AI 생성에 활용됩니다.</p>
+        </div>
+      </div>
+
+      <hr class="np-divider mb-10" />
+
       <!-- 2-2. 경력 연수 -->
       <div class="mb-10">
         <h2 class="text-xl font-bold text-neutral-800 mb-4">경력 연수</h2>
@@ -273,17 +285,7 @@
 
       <!-- ── AI 자동생성 패널 ── -->
       <div id="panel-ai">
-        <!-- 보유 스킬 입력 -->
-        <div class="np-textfield-wrap mb-4">
-          <label class="np-textfield-label" for="skills">
-            보유 스킬
-            <span class="text-base font-normal text-neutral-400 ml-1">쉼표로 구분해 입력하세요</span>
-          </label>
-          <input id="skills" type="text" class="np-textfield" placeholder="예: DX전략, AI, 클라우드, 리더십"
-            oninput="onSkillsInput(this.value)" />
-        </div>
-
-        <!-- AI 생성 버튼 (스킬 입력 시 활성화) -->
+        <!-- AI 생성 버튼 (커리어 설정에서 입력한 스킬 활용) -->
         <button id="ai-generate-btn" onclick="generateAI()" disabled
           class="np-btn np-btn-md np-btn-primary w-full mb-6 opacity-40 cursor-not-allowed">
           <span>✨</span> AI로 자기소개 작성하기
@@ -304,15 +306,6 @@
 
       <!-- ── 직접 작성 패널 ── -->
       <div id="panel-manual" class="hidden">
-        <!-- 추천 키워드 -->
-        <div class="flex flex-wrap gap-2 mb-4">
-          <button class="np-chip" onclick="insertKeyword('책임감 있게 일합니다')">책임감 있게 일합니다</button>
-          <button class="np-chip" onclick="insertKeyword('오래 근무할 수 있습니다')">오래 근무할 수 있습니다</button>
-          <button class="np-chip" onclick="insertKeyword('고객 응대가 익숙합니다')">고객 응대가 익숙합니다</button>
-          <button class="np-chip" onclick="insertKeyword('협업이 원활합니다')">협업이 원활합니다</button>
-          <button class="np-chip" onclick="insertKeyword('시간 약속을 잘 지킵니다')">시간 약속을 잘 지킵니다</button>
-        </div>
-
         <div class="np-textfield-wrap">
           <label class="np-textfield-label" for="intro">자기소개</label>
           <textarea id="intro" class="np-textarea" rows="7"
@@ -450,6 +443,10 @@
       updateProgressUI();
       updateBottomActions();
       window.scrollTo({ top: 0, behavior: 'smooth' });
+
+      /* Step 3 진입 시 커리어설정에서 입력한 스킬로 AI 버튼 상태 갱신 */
+      if (step === 3) onSkillsInput(document.getElementById('skills').value);
+
       saveDraft();
     }
 
